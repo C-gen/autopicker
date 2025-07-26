@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+
+{% block title %}Услуги - Автоподбор автомобилей{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Наши услуги</h1>
+                <p class="lead mb-4">
+                    Выберите подходящий пакет услуг для ваших потребностей. 
+                    Каждый пакет включает в себя профессиональный подход и гарантию качества.
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <i class="fas fa-cogs" style="font-size: 15rem; opacity: 0.1;"></i>
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <i class="fas fa-list" style="font-size: 3rem; color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Пакеты услуг</h2>
+                <p class="lead text-muted">
+                    Выберите наиболее подходящий для вас вариант
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card service-card h-100 {% if service.is_popular %}border-primary{% endif %}">
+                    {% if service.is_popular %}
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <span class="badge bg-warning text-dark">Популярно</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h4 class="card-title fw-bold">{{ service.name }}</h4>
+                            <div class="my-3">
+                                <span class="display-6 fw-bold text-primary">{{ service.price }} ₽</span>
+                                <small class="text-muted d-block">{{ service.duration }}</small>
+                            </div>
+                        </div>
+                        
+                        <p class="card-text text-muted mb-4">{{ service.description }}</p>
+                        
+                        {% if service.features %}
+                        <ul class="list-unstyled mb-4">
+                            {% for feature in service.features %}
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>{{ feature }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        
+                        <a href="{% url 'main:application_form' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Заказать услугу
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default services if none in database -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card service-card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h4 class="card-title fw-bold">Базовый подбор</h4>
+                            <div class="my-3">
+                                <span class="display-6 fw-bold text-primary">15 000 ₽</span>
+                                <small class="text-muted d-block">5-7 дней</small>
+                            </div>
+                        </div>
+                        
+                        <p class="card-text text-muted mb-4">
+                            Базовый поиск автомобиля по вашим критериям с предварительной проверкой
+                        </p>
+                        
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Анализ рынка
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Подбор вариантов
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Предварительная проверка
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Консультации по выбору
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'main:application_form' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Заказать услугу
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card service-card h-100 border-primary">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <span class="badge bg-warning text-dark">Популярно</span>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h4 class="card-title fw-bold">Расширенный подбор</h4>
+                            <div class="my-3">
+                                <span class="display-6 fw-bold text-primary">25 000 ₽</span>
+                                <small class="text-muted d-block">7-10 дней</small>
+                            </div>
+                        </div>
+                        
+                        <p class="card-text text-muted mb-4">
+                            Полный подбор с детальной проверкой и сопровождением сделки
+                        </p>
+                        
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Все из базового пакета
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Детальная проверка
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Проверка истории
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Сопровождение сделки
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Помощь с документами
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'main:application_form' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Заказать услугу
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card service-card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h4 class="card-title fw-bold">Премиум подбор</h4>
+                            <div class="my-3">
+                                <span class="display-6 fw-bold text-primary">40 000 ₽</span>
+                                <small class="text-muted d-block">10-14 дней</small>
+                            </div>
+                        </div>
+                        
+                        <p class="card-text text-muted mb-4">
+                            VIP подбор с максимальной проверкой и полным сопровождением
+                        </p>
+                        
+                        <ul class="list-unstyled mb-4">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Все из расширенного пакета
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Диагностика на СТО
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Проверка в ГИБДД
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Торг с продавцом
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Гарантия 30 дней
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'main:application_form' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-paper-plane me-2"></i>Заказать услугу
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Additional Services -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Дополнительные услуги</h2>
+                <p class="lead text-muted">
+                    Специализированные услуги для особых случаев
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-search-plus text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="card-title">Проверка перед покупкой</h5>
+                                <p class="card-text text-muted">
+                                    Детальная проверка конкретного автомобиля перед покупкой. 
+                                    Включает техническую диагностику, проверку документов и истории.
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Техническая диагностика</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Проверка документов</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Проверка истории</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Проверка в ГИБДД</li>
+                                </ul>
+                                <div class="mt-3">
+                                    <span class="h5 text-primary fw-bold">5 000 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-handshake text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="card-title">Сопровождение сделки</h5>
+                                <p class="card-text text-muted">
+                                    Полное сопровождение процесса покупки автомобиля. 
+                                    Помощь с документами, торгом и оформлением.
+                                </p>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Помощь с документами</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Торг с продавцом</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Сопровождение в ГИБДД</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Проверка договора</li>
+                                </ul>
+                                <div class="mt-3">
+                                    <span class="h5 text-primary fw-bold">3 000 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Как мы работаем</h2>
+                <p class="lead text-muted">
+                    Простой и понятный процесс подбора автомобиля
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h4 mb-0">1</span>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Заявка</h5>
+                    <p class="text-muted">
+                        Оставляете заявку с вашими требованиями и бюджетом
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h4 mb-0">2</span>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Поиск</h5>
+                    <p class="text-muted">
+                        Анализируем рынок и находим подходящие варианты
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h4 mb-0">3</span>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Проверка</h5>
+                    <p class="text-muted">
+                        Проверяем выбранные варианты на техническое состояние
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                            <span class="h4 mb-0">4</span>
+                        </div>
+                    </div>
+                    <h5 class="fw-bold">Покупка</h5>
+                    <p class="text-muted">
+                        Сопровождаем сделку и помогаем с оформлением
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-4">Готовы заказать услугу?</h2>
+                <p class="lead mb-4">
+                    Оставьте заявку и получите бесплатную консультацию по выбору пакета услуг
+                </p>
+                <a href="{% url 'main:application_form' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-paper-plane me-2"></i>Оставить заявку
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

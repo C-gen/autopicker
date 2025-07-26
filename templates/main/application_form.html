@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+
+{% block title %}Оставить заявку - Автоподбор автомобилей{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Оставить заявку</h1>
+                <p class="lead mb-4">
+                    Заполните форму ниже, и мы свяжемся с вами в ближайшее время для обсуждения 
+                    ваших потребностей в подборе автомобиля.
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <i class="fas fa-file-alt" style="font-size: 15rem; opacity: 0.1;"></i>
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <i class="fas fa-paper-plane" style="font-size: 3rem; color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Application Form Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <h2 class="h3 fw-bold mb-3">Форма заявки на автоподбор</h2>
+                            <p class="text-muted">
+                                Заполните все поля, и мы подберем для вас идеальный автомобиль
+                            </p>
+                        </div>
+                        
+                        <form method="post" id="applicationForm">
+                            {% csrf_token %}
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="{{ form.name.id_for_label }}" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Ваше имя *
+                                    </label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.name.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.phone.id_for_label }}" class="form-label">
+                                        <i class="fas fa-phone me-2"></i>Телефон *
+                                    </label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.phone.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.budget.id_for_label }}" class="form-label">
+                                        <i class="fas fa-ruble-sign me-2"></i>Бюджет *
+                                    </label>
+                                    {{ form.budget }}
+                                    {% if form.budget.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.budget.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="{{ form.brand_model.id_for_label }}" class="form-label">
+                                        <i class="fas fa-car me-2"></i>Марка/модель *
+                                    </label>
+                                    {{ form.brand_model }}
+                                    {% if form.brand_model.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.brand_model.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-12">
+                                    <label for="{{ form.comment.id_for_label }}" class="form-label">
+                                        <i class="fas fa-comment me-2"></i>Дополнительная информация
+                                    </label>
+                                    {{ form.comment }}
+                                    {% if form.comment.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {{ form.comment.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        Расскажите о ваших предпочтениях, требованиях к автомобилю или особых пожеланиях
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="fas fa-paper-plane me-2"></i>Отправить заявку
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Additional Info -->
+                <div class="row mt-5 g-4">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-clock text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="fw-bold">Быстрый ответ</h5>
+                            <p class="text-muted small">
+                                Свяжемся с вами в течение 2 часов в рабочее время
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-shield-alt text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="fw-bold">Конфиденциальность</h5>
+                            <p class="text-muted small">
+                                Ваши данные защищены и не передаются третьим лицам
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-gift text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="fw-bold">Бесплатная консультация</h5>
+                            <p class="text-muted small">
+                                Первая консультация и анализ рынка бесплатно
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-6 fw-bold mb-3">Другие способы связи</h2>
+                <p class="lead text-muted">
+                    Если у вас есть вопросы, свяжитесь с нами любым удобным способом
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% if site_settings.phone %}
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-phone text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title">Телефон</h5>
+                        <p class="card-text">
+                            <a href="tel:{{ site_settings.phone }}" class="text-decoration-none">
+                                {{ site_settings.phone }}
+                            </a>
+                        </p>
+                        <small class="text-muted">Звоните в любое время</small>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if site_settings.telegram %}
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fab fa-telegram text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title">Telegram</h5>
+                        <p class="card-text">
+                            <a href="https://t.me/{{ site_settings.telegram }}" target="_blank" class="text-decoration-none">
+                                @{{ site_settings.telegram }}
+                            </a>
+                        </p>
+                        <small class="text-muted">Быстрые сообщения</small>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if site_settings.whatsapp %}
+            <div class="col-md-4">
+                <div class="card h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fab fa-whatsapp text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="card-title">WhatsApp</h5>
+                        <p class="card-text">
+                            <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="text-decoration-none">
+                                {{ site_settings.whatsapp }}
+                            </a>
+                        </p>
+                        <small class="text-muted">Удобное общение</small>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Phone number formatting
+    const phoneInput = document.getElementById('{{ form.phone.id_for_label }}');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 0) {
+                if (value.length <= 3) {
+                    value = '+' + value;
+                } else if (value.length <= 6) {
+                    value = '+' + value.slice(0, 3) + ' (' + value.slice(3);
+                } else if (value.length <= 8) {
+                    value = '+' + value.slice(0, 3) + ' (' + value.slice(3, 6) + ') ' + value.slice(6);
+                } else if (value.length <= 10) {
+                    value = '+' + value.slice(0, 3) + ' (' + value.slice(3, 6) + ') ' + value.slice(6, 8) + '-' + value.slice(8);
+                } else {
+                    value = '+' + value.slice(0, 3) + ' (' + value.slice(3, 6) + ') ' + value.slice(6, 8) + '-' + value.slice(8, 10) + '-' + value.slice(10, 12);
+                }
+            }
+            e.target.value = value;
+        });
+    }
+    
+    // Form validation
+    const form = document.getElementById('applicationForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(function(field) {
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Пожалуйста, заполните все обязательные поля');
+            }
+        });
+    }
+});
+</script>
+{% endblock %} 

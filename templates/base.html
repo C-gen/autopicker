@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Автоподбор - Профессиональный подбор автомобилей{% endblock %}</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f8fafc;
+            --border-color: #e5e7eb;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .section-padding {
+            padding: 4rem 0;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 6rem 0;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card {
+            height: 100%;
+            border: 1px solid var(--border-color);
+        }
+        
+        .review-card {
+            background: var(--bg-light);
+        }
+        
+        .star-rating {
+            color: var(--accent-color);
+        }
+        
+        .footer {
+            background-color: var(--text-dark);
+            color: #d1d5db;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer a {
+            color: #9ca3af;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: white;
+        }
+        
+        .footer p, .footer li {
+            color: #e5e7eb;
+        }
+        
+        .footer h5, .footer h6 {
+            color: white;
+        }
+        
+        .footer .text-light {
+            color: #f3f4f6 !important;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+        
+        .alert {
+            border-radius: 0.5rem;
+            border: none;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            margin: 0 0.5rem;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 0;
+            }
+            
+            .section-padding {
+                padding: 2rem 0;
+            }
+            
+            .navbar .d-flex {
+                flex-direction: column;
+                gap: 0.5rem !important;
+                width: 100%;
+            }
+            
+            .navbar .btn {
+                width: 100%;
+                margin-bottom: 0.25rem;
+            }
+            
+            .footer .d-flex {
+                justify-content: center !important;
+            }
+            
+            .footer .btn {
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'main:home' %}">
+                <i class="fas fa-car me-2"></i>
+                {% if site_settings %}{{ site_settings.site_name }}{% else %}Автоподбор{% endif %}
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'main:home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'main:about' %}">Обо мне</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" href="{% url 'main:services' %}">Услуги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'reviews' %}active{% endif %}" href="{% url 'main:reviews' %}">Отзывы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'blog' %}active{% endif %}" href="{% url 'main:blog' %}">Блог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'main:contact' %}">Контакты</a>
+                    </li>
+                </ul>
+                
+                <!-- Mobile Social Buttons -->
+                <div class="d-lg-none d-flex justify-content-center gap-2 mb-3">
+                    {% if site_settings.telegram %}
+                        <a href="https://t.me/{{ site_settings.telegram }}" target="_blank" class="btn btn-outline-primary" title="Telegram">
+                            <i class="fab fa-telegram-plane me-1"></i>Telegram
+                        </a>
+                    {% endif %}
+                    {% if site_settings.whatsapp %}
+                        <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="btn btn-outline-success" title="WhatsApp">
+                            <i class="fab fa-whatsapp me-1"></i>WhatsApp
+                        </a>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex align-items-center gap-2">
+                    {% if site_settings.telegram %}
+                        <a href="https://t.me/{{ site_settings.telegram }}" target="_blank" class="btn btn-outline-primary" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    {% endif %}
+                    {% if site_settings.whatsapp %}
+                        <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="btn btn-outline-success" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'main:application_form' %}" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-2"></i>Оставить заявку
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- О компании -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">
+                        <i class="fas fa-car me-2"></i>
+                        {% if site_settings %}{{ site_settings.site_name }}{% else %}Автоподбор{% endif %}
+                    </h5>
+                    <p class="text-light">
+                        Профессиональный подбор автомобилей с проверкой и гарантией качества. 
+                        Помогаем найти идеальный автомобиль для ваших потребностей.
+                    </p>
+                    <div class="social-links">
+                        {% if site_settings.telegram %}
+                            <a href="https://t.me/{{ site_settings.telegram }}" target="_blank">
+                                <i class="fab fa-telegram-plane"></i>
+                            </a>
+                        {% endif %}
+                        {% if site_settings.whatsapp %}
+                            <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Навигация -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3">Навигация</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{% url 'main:home' %}">
+                                <i class="fas fa-home me-2"></i>Главная
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:about' %}">
+                                <i class="fas fa-user me-2"></i>Обо мне
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-cogs me-2"></i>Услуги
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:reviews' %}">
+                                <i class="fas fa-star me-2"></i>Отзывы
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:blog' %}">
+                                <i class="fas fa-newspaper me-2"></i>Блог
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:contact' %}">
+                                <i class="fas fa-envelope me-2"></i>Контакты
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Услуги -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3">Услуги</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-search me-2"></i>Базовый подбор
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-search-plus me-2"></i>Расширенный подбор
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-crown me-2"></i>Премиум подбор
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-shield-alt me-2"></i>Проверка автомобиля
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{% url 'main:services' %}">
+                                <i class="fas fa-handshake me-2"></i>Сопровождение сделки
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Контакты -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h6 class="mb-3">Контакты</h6>
+                    <ul class="list-unstyled">
+                        {% if site_settings.phone %}
+                            <li class="mb-2">
+                                <i class="fas fa-phone me-2"></i>
+                                <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>
+                            </li>
+                        {% endif %}
+                        {% if site_settings.email %}
+                            <li class="mb-2">
+                                <i class="fas fa-envelope me-2"></i>
+                                <a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>
+                            </li>
+                        {% endif %}
+                        {% if site_settings.address %}
+                            <li class="mb-2">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ site_settings.address }}
+                            </li>
+                        {% endif %}
+                        <li class="mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            Пн-Пт: 9:00-20:00
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-clock me-2"></i>
+                            Сб-Вс: 10:00-18:00
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <!-- Нижняя часть футера -->
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-0 text-light">
+                                &copy; {% now "Y" %} {% if site_settings %}{{ site_settings.site_name }}{% else %}Автоподбор{% endif %}. 
+                                Все права защищены.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            {% if site_settings.inn %}
+                                <small class="text-light">
+                                    <i class="fas fa-id-card me-1"></i>ИНН: {{ site_settings.inn }}
+                                </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <div class="d-flex justify-content-lg-end gap-2 flex-wrap">
+                        {% if site_settings.telegram %}
+                            <a href="https://t.me/{{ site_settings.telegram }}" target="_blank" class="btn btn-outline-light btn-sm" title="Telegram">
+                                <i class="fab fa-telegram-plane me-1"></i>Telegram
+                            </a>
+                        {% endif %}
+                        {% if site_settings.whatsapp %}
+                            <a href="https://wa.me/{{ site_settings.whatsapp }}" target="_blank" class="btn btn-outline-light btn-sm" title="WhatsApp">
+                                <i class="fab fa-whatsapp me-1"></i>WhatsApp
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'main:application_form' %}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-paper-plane me-1"></i>Оставить заявку
+                        </a>
+                        <a href="{% url 'main:contact' %}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-envelope me-1"></i>Написать нам
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

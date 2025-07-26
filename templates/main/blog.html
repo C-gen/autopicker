@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог - Автоподбор автомобилей{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Блог</h1>
+                <p class="lead mb-4">
+                    Полезные статьи и советы по выбору, покупке и обслуживанию автомобилей
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <i class="fas fa-newspaper" style="font-size: 15rem; opacity: 0.1;"></i>
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <i class="fas fa-book-open" style="font-size: 3rem; color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Posts Section -->
+<section class="section-padding">
+    <div class="container">
+        {% if posts %}
+        <div class="row g-4">
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-gradient-primary d-flex align-items-center justify-content-center" style="height: 200px; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+                        <i class="fas fa-newspaper text-white" style="font-size: 3rem;"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">{{ post.title }}</h5>
+                        <p class="card-text text-muted">{{ post.excerpt|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>{{ post.created_at|date:"d.m.Y" }}
+                            </small>
+                            <a href="{% url 'main:blog_detail' post.slug %}" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Default blog posts if none in database -->
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-car text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Как выбрать надежный автомобиль</h5>
+                        <p class="card-text text-muted">
+                            Основные критерии выбора автомобиля: на что обратить внимание при покупке, 
+                            как проверить техническое состояние и документы...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>15.12.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-tools text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Проверка автомобиля перед покупкой</h5>
+                        <p class="card-text text-muted">
+                            Пошаговая инструкция по проверке автомобиля: от осмотра кузова до 
+                            диагностики двигателя и проверки документов...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>10.12.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-file-contract text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Оформление документов при покупке</h5>
+                        <p class="card-text text-muted">
+                            Все о документах при покупке автомобиля: какие документы нужны, 
+                            как правильно оформить сделку и избежать проблем...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>05.12.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-chart-line text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Автомобильный рынок: тренды 2024</h5>
+                        <p class="card-text text-muted">
+                            Анализ автомобильного рынка: какие марки популярны, 
+                            на что обратить внимание при выборе автомобиля в 2024 году...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>01.12.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-shield-alt text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Безопасность при покупке автомобиля</h5>
+                        <p class="card-text text-muted">
+                            Как избежать мошенников при покупке автомобиля: основные схемы обмана, 
+                            красные флаги и способы защиты...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>25.11.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-calculator text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">Расчет стоимости владения автомобилем</h5>
+                        <p class="card-text text-muted">
+                            Как рассчитать реальную стоимость владения автомобилем: 
+                            топливо, страховка, обслуживание и другие расходы...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>20.11.2023
+                            </small>
+                            <a href="#" class="btn btn-outline-primary btn-sm">
+                                Читать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Subscribe Section -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-6 fw-bold mb-4">Подпишитесь на обновления</h2>
+                <p class="lead text-muted mb-4">
+                    Получайте новые статьи и советы по выбору автомобиля прямо на почту
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Ваш email" aria-label="Email">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-paper-plane me-2"></i>Подписаться
+                            </button>
+                        </div>
+                        <small class="text-muted">
+                            Мы не спамим и не передаем ваши данные третьим лицам
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-4">Нужна помощь в выборе автомобиля?</h2>
+                <p class="lead mb-4">
+                    Оставьте заявку и получите профессиональную консультацию
+                </p>
+                <a href="{% url 'main:application_form' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-paper-plane me-2"></i>Оставить заявку
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

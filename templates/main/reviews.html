@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %}Отзывы клиентов - Автоподбор автомобилей{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Отзывы клиентов</h1>
+                <p class="lead mb-4">
+                    Что говорят о нас довольные клиенты, которым мы помогли найти идеальный автомобиль
+                </p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    <i class="fas fa-comments" style="font-size: 15rem; opacity: 0.1;"></i>
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                        <i class="fas fa-star" style="font-size: 3rem; color: var(--accent-color);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reviews Section -->
+<section class="section-padding">
+    <div class="container">
+        {% if reviews %}
+        <div class="row g-4">
+            {% for review in reviews %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">{{ review.name }}</h6>
+                            <div class="star-rating">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        {% if review.car_model %}
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>{{ review.car_model }}
+                        </p>
+                        {% endif %}
+                        
+                        <p class="card-text">{{ review.text }}</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>{{ review.created_at|date:"d.m.Y" }}
+                            </small>
+                            {% if review.is_verified %}
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Default reviews if none in database -->
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Александр Петров</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>Toyota Camry 2019
+                        </p>
+                        
+                        <p class="card-text">
+                            Отличная работа! Нашли для меня идеальный автомобиль в рамках бюджета. 
+                            Провели полную проверку, все документы в порядке. Рекомендую всем!
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>15.12.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Мария Сидорова</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>BMW X5 2020
+                        </p>
+                        
+                        <p class="card-text">
+                            Профессиональный подход к делу. Специалист учел все мои пожелания 
+                            и нашел автомобиль, который превзошел мои ожидания. Спасибо!
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>08.12.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Дмитрий Козлов</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>Mercedes-Benz C-Class 2021
+                        </p>
+                        
+                        <p class="card-text">
+                            Быстро и качественно. Нашли автомобиль за неделю, провели 
+                            полную диагностику. Все работает отлично, доволен результатом.
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>01.12.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Елена Воробьева</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>Audi A4 2018
+                        </p>
+                        
+                        <p class="card-text">
+                            Очень довольна работой! Специалист помог выбрать надежный 
+                            автомобиль для семьи. Цена и качество полностью соответствуют.
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>25.11.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Сергей Николаев</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>Volkswagen Passat 2019
+                        </p>
+                        
+                        <p class="card-text">
+                            Отличный сервис! Нашли автомобиль в идеальном состоянии, 
+                            помогли с оформлением документов. Буду рекомендовать друзьям.
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>18.11.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="card review-card h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h6 class="card-title mb-0 fw-bold">Анна Смирнова</h6>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        
+                        <p class="text-muted small mb-3">
+                            <i class="fas fa-car me-1"></i>Hyundai Tucson 2020
+                        </p>
+                        
+                        <p class="card-text">
+                            Профессиональный подход и внимательность к деталям. 
+                            Нашли отличный автомобиль, который полностью подходит для моих нужд.
+                        </p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar me-1"></i>10.11.2023
+                            </small>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check me-1"></i>Проверенный отзыв
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="section-padding bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-6 fw-bold mb-3">Наши достижения</h2>
+                <p class="lead text-muted">
+                    Цифры, которые говорят о качестве нашей работы
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-users text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="display-6 fw-bold text-primary">300+</h3>
+                    <p class="text-muted">Довольных клиентов</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-car text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="display-6 fw-bold text-primary">500+</h3>
+                    <p class="text-muted">Подобранных автомобилей</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-star text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="display-6 fw-bold text-primary">4.9</h3>
+                    <p class="text-muted">Средняя оценка</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-calendar-alt text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h3 class="display-6 fw-bold text-primary">5+</h3>
+                    <p class="text-muted">Лет опыта</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-4">Готовы присоединиться к довольным клиентам?</h2>
+                <p class="lead mb-4">
+                    Оставьте заявку и получите профессиональный подбор автомобиля
+                </p>
+                <a href="{% url 'main:application_form' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-paper-plane me-2"></i>Оставить заявку
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 
